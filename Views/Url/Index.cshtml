@@ -1,0 +1,39 @@
+﻿@using LinkCompressor.Models
+@model IEnumerable<UrlView>
+@{
+    ViewData["Title"] = "URL Monitor";
+}
+
+<div class="text-center">
+    <h1 class="display-4">LinkCompressor v0.1</h1>
+    <hr/>
+    <div class="d-flex p-2"><a class="btn btn-primary bg-success" role="button" asp-action="Create">Добавить</a></div>
+    
+    <table class="table table-bordered table-responsive table-hover" id="url_list" style="font-size: 12px">
+        <thead>
+            <tr>
+                <th>Оригинальный URL</th>
+                <th>Измененный URL</th>
+                <th>Кол-во переходов</th>
+                <th>Дата создания</th>
+                <th>Действия</th>
+            </tr>
+        </thead>
+
+        @foreach (var d in Model)
+        {
+            <tr id="@d.Id">
+                <td><a href="@d.LongUrl">@d.LongUrl</a></td>
+                <td><a asp-controller="Url" asp-action="Follow" asp-route-path="@d.ShortUrl">@ViewData["HOST_URL"]@d.ShortUrl</a></td>
+                <td>@d.RedirectCounter</td>
+                <td>@d.CreationDate</td>
+                <td>
+                    <div class="d-flex p-2" ><a asp-action="Edit" asp-route-id="@d.ShortUrl">Правка(@d.ShortUrl)</a>|
+                    <a asp-action="Delete" asp-route-id="@d.ShortUrl">Удалить</a></div>
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+
+
