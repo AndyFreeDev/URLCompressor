@@ -1,25 +1,25 @@
-﻿@model LinkCompressor.Models.UrlItem
+﻿@model UrlItem
 
 <h3>Удалить данный URL ?</h3>
 <div>
-    <hr />
+    <hr/>
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Id)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Id)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.LongUrl)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.LongUrl)
         </dd>
     </dl>
-    
+
     <form asp-action="Delete">
-        <input type="submit" value="Удалить" class="btn btn-danger" />
+        <input type="submit" value="Удалить" class="btn btn-danger"/>
         <a class="btn btn-primary bg-success" role="button" asp-action="Index">Отмена</a>
     </form>
 </div>

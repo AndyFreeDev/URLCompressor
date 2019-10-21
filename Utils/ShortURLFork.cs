@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace LinkCompressor.Utils
+﻿namespace LinkCompressor.Utils
 {
     public class ShortURLFork
     {
-        private static int PREFIX = 2019;
+        private const int PREFIX = 2019;
 
         public static int Decode(string str)
         {
@@ -20,4 +15,3 @@ namespace LinkCompressor.Utils
         }
     }
 }
-

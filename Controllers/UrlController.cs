@@ -1,15 +1,14 @@
 ﻿using System.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using LinkCompressor.Models;
 using LinkCompressor.Repository;
 using LinkCompressor.Utils;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace LinkCompressor.Controllers
 {
     public class UrlController : Controller
     {
-
         private readonly ILogger<UrlController> _logger;
         private readonly IUrlCatalogRepository _repository;
 
@@ -87,22 +86,23 @@ namespace LinkCompressor.Controllers
                 return NotFound();
             }
 
-            int id = ShortURLFork.Decode(url);
+            var id = ShortURLFork.Decode(url);
 
             if (ModelState.IsValid)
             {
-                    var viewItem = _repository.Get(id);
-                    if (viewItem != null)
-                    {
-                        viewItem.LongUrl = item.LongUrl;
-                        _repository.Update(viewItem);
-                    }
-                    else
-                    {
-                        _logger.LogInformation("URL not found in DB : {url}", url);
-                        return NotFound();
-                    }
-               _logger.LogInformation("{VIEW_NAME} : Response for view", nameof(Edit));
+                var viewItem = _repository.Get(id);
+                if (viewItem != null)
+                {
+                    viewItem.LongUrl = item.LongUrl;
+                    _repository.Update(viewItem);
+                }
+                else
+                {
+                    _logger.LogInformation("URL not found in DB : {url}", url);
+                    return NotFound();
+                }
+
+                _logger.LogInformation("{VIEW_NAME} : Response for view", nameof(Edit));
                 return RedirectToAction(nameof(Index));
             }
 
@@ -119,7 +119,7 @@ namespace LinkCompressor.Controllers
                 return NotFound();
             }
 
-            int id = ShortURLFork.Decode(url);
+            var id = ShortURLFork.Decode(url);
 
             var item = _repository.Get(id);
             if (item != null)
@@ -142,12 +142,13 @@ namespace LinkCompressor.Controllers
                 return NotFound();
             }
 
-            int id = ShortURLFork.Decode(url);
+            var id = ShortURLFork.Decode(url);
             if (_repository.Delete(id) > 0)
             {
                 _logger.LogInformation("{VIEW_NAME} : Response for view", nameof(Index));
                 return RedirectToAction(nameof(Index));
             }
+
             return NotFound();
         }
 
@@ -162,14 +163,12 @@ namespace LinkCompressor.Controllers
         public IActionResult Create(UrlItem item)
         {
             if (item != null)
-            {
                 if (ModelState.IsValid)
                 {
                     _repository.Add(new UrlView(item.LongUrl));
                     _logger.LogInformation("{VIEW_NAME} : Response for view", nameof(Create));
                     return RedirectToAction(nameof(Index));
                 }
-            }
 
             return View(item);
         }

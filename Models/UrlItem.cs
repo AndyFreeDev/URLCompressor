@@ -15,8 +15,7 @@ namespace LinkCompressor.Models
         }
 
         public int Id { get; set; }
-        [Required]
-        [Url]
-        public string LongUrl { get; set; }
+
+        [Required] [Url] public string LongUrl { get; set; }
     }
 }

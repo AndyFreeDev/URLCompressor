@@ -1,5 +1,3 @@
-using System;
-
 namespace LinkCompressor.Models
 {
     public class ErrorViewModel

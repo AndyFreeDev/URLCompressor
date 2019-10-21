@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using LinkCompressor.Models;
 
 namespace LinkCompressor.Repository
 {
-    public class UrlCatalogRepository: IUrlCatalogRepository
+    public class UrlCatalogRepository : IUrlCatalogRepository
     {
         private readonly MySQLContext _context;
 
@@ -44,11 +42,11 @@ namespace LinkCompressor.Repository
             var item = Get(id);
             if (item != null)
             {
-                 _context.Remove(item);
-                 return _context.SaveChanges();
+                _context.Remove(item);
+                return _context.SaveChanges();
             }
+
             return 0;
         }
-
     }
 }

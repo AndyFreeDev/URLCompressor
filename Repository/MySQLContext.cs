@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using LinkCompressor.Models;
+﻿using LinkCompressor.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace LinkCompressor.Repository
@@ -11,9 +7,8 @@ namespace LinkCompressor.Repository
     {
         public MySQLContext(DbContextOptions options) : base(options)
         {
-
         }
 
-       public DbSet<UrlView> UrlView { get; set; }
+        public DbSet<UrlView> UrlView { get; set; }
     }
 }
