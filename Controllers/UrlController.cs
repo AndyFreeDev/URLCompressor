@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Security.Policy;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using LinkCompressor.Models;
 using LinkCompressor.Repository;
 using LinkCompressor.Utils;
-using Microsoft.EntityFrameworkCore;
 
 namespace LinkCompressor.Controllers
 {
@@ -28,9 +21,9 @@ namespace LinkCompressor.Controllers
 
         public IActionResult Index()
         {
-            ViewData["HOST_URL"] = $"{this.Request.Scheme}://{this.Request.Host}{this.Request.PathBase}/";
+            ViewData["HOST_URL"] = $"{Request.Scheme}://{Request.Host}{Request.PathBase}/";
             var urlList = _repository.GetAll();
-            _logger.LogInformation("{VIEW_NAME} : Request for view", nameof(UrlController.Index));
+            _logger.LogInformation("{VIEW_NAME} : Request for view", nameof(Index));
             return View(urlList);
         }
 
@@ -53,7 +46,7 @@ namespace LinkCompressor.Controllers
             shortUrl.RedirectCounter++;
             _repository.Update(shortUrl);
 
-            _logger.LogInformation("{VIEW_NAME} : Request for view", nameof(UrlController.Follow));
+            _logger.LogInformation("{VIEW_NAME} : Request for view", nameof(Follow));
             return Redirect(shortUrl.LongUrl);
         }
 
@@ -80,7 +73,7 @@ namespace LinkCompressor.Controllers
                 return NotFound();
             }
 
-            _logger.LogInformation("{VIEW_NAME} : Request for view", nameof(UrlController.Edit));
+            _logger.LogInformation("{VIEW_NAME} : Request for view", nameof(Edit));
             return View(new UrlItem(item.Id, item.LongUrl));
         }
 
@@ -109,7 +102,7 @@ namespace LinkCompressor.Controllers
                         _logger.LogInformation("URL not found in DB : {url}", url);
                         return NotFound();
                     }
-               _logger.LogInformation("{VIEW_NAME} : Response for view", nameof(UrlController.Edit));
+               _logger.LogInformation("{VIEW_NAME} : Response for view", nameof(Edit));
                 return RedirectToAction(nameof(Index));
             }
 
@@ -131,7 +124,7 @@ namespace LinkCompressor.Controllers
             var item = _repository.Get(id);
             if (item != null)
             {
-                _logger.LogInformation("{VIEW_NAME} : Request for view", nameof(UrlController.Delete));
+                _logger.LogInformation("{VIEW_NAME} : Request for view", nameof(Delete));
                 return View(new UrlItem(item.Id, item.LongUrl));
             }
 
@@ -152,7 +145,7 @@ namespace LinkCompressor.Controllers
             int id = ShortURLFork.Decode(url);
             if (_repository.Delete(id) > 0)
             {
-                _logger.LogInformation("{VIEW_NAME} : Response for view", nameof(UrlController.Index));
+                _logger.LogInformation("{VIEW_NAME} : Response for view", nameof(Index));
                 return RedirectToAction(nameof(Index));
             }
             return NotFound();
@@ -160,7 +153,7 @@ namespace LinkCompressor.Controllers
 
         public IActionResult Create()
         {
-            _logger.LogInformation("{VIEW_NAME} : Request for view", nameof(UrlController.Create));
+            _logger.LogInformation("{VIEW_NAME} : Request for view", nameof(Create));
             return View(new UrlItem());
         }
 
@@ -173,7 +166,7 @@ namespace LinkCompressor.Controllers
                 if (ModelState.IsValid)
                 {
                     _repository.Add(new UrlView(item.LongUrl));
-                    _logger.LogInformation("{VIEW_NAME} : Response for view", nameof(UrlController.Create));
+                    _logger.LogInformation("{VIEW_NAME} : Response for view", nameof(Create));
                     return RedirectToAction(nameof(Index));
                 }
             }
